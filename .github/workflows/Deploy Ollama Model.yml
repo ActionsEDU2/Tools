@@ -244,12 +244,6 @@ jobs:
       - name: 部署Open WebUI
         run: |
           echo "开始部署Open WebUI:"
-          docker run -d --name tika -p 9998:9998 -restart unless-stopped apache/tika:latest-full
-          echo "地址：IP:9998"
-
-      - name: 部署Apache Tika
-        run: |
-          echo "开始部署Apache Tika:"
           docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
           echo "地址：IP:8080"
 
@@ -274,9 +268,8 @@ jobs:
 
           🛠️ <b>部署嵌入模型:</b> <code>${{ github.event.inputs.embedding_model }}</code>  
           🔗 <b>Ollama API 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:11434</code>  
-          🏗️ <b>Dify 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}</code>  
           🌐 <b>Open WebUI:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:8080</code>  
-          🪶 <b>Apache Tika 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:9998</code>  
+          🏗️ <b>Dify 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}</code>  
 
           🕒 <b>当前时间:</b> <code>$current_time</code>  
           EOF
