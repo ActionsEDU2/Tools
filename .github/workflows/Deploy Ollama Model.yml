@@ -267,6 +267,7 @@ jobs:
           git clone https://github.com/infiniflow/ragflow.git
           cd ragflow/docker
           sed -i 's/80:80/180:80/' docker-compose.yml
+          sed -i 's/-slim//' .env
           docker compose -f docker-compose.yml up -d
           docker logs -f ragflow-server
 
