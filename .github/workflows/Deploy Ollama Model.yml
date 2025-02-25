@@ -250,7 +250,7 @@ jobs:
       - name: 部署 Apache Tika
         run: |
           echo "开始部署Apache Tika:"
-          docker run -d --name tika -p 9998:9998 -restart unless-stopped apache/tika:latest-full
+          docker run -d --name tika -p 9998:9998 --restart unless-stopped apache/tika:latest-full
           echo "地址：IP:9998"
 
       - name: 发送 Telegram 通知
