@@ -225,7 +225,7 @@ jobs:
       - name: 部署选定模型
         run: |
           echo "开始部署模型：${{ github.event.inputs.embedding_model }}"
-          ollama run ${{ github.event.inputs.embedding_model }}
+          ollama pull ${{ github.event.inputs.embedding_model }}
           echo "--------------------------硬盘信息--------------------------"
           echo "硬盘数量: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
