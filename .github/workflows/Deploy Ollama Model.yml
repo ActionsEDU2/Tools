@@ -376,7 +376,7 @@ jobs:
           cd ragflow/docker
           sed -i 's/-slim//' .env
           docker compose -f docker-compose.yml up -d
-          sleep 30
+          sleep 20
           docker logs ragflow-server
 
           echo "地址：IP:80"
@@ -401,7 +401,6 @@ jobs:
           📮 <b>邮政编码:</b> <code>${{ steps.check_server.outputs.postal }}</code>  
           ⏰ <b>时区:</b> <code>${{ steps.check_server.outputs.timezone }}</code>  
 
-          
           🌊 <b>RAGFlow 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}</code>
 
           🕒 <b>当前时间:</b> <code>$current_time</code>  
