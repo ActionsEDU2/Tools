@@ -259,6 +259,19 @@ jobs:
           docker run -d --name=maxkb --restart=always -p 6060:8080 -v ~/.maxkb:/var/lib/postgresql/data -v ~/.python-packages:/opt/maxkb/app/sandbox/python-packages registry.fit2cloud.com/maxkb/maxkb
           echo "地址：IP:6060"
 
+      - name: 部署 RAGFlow
+        run: |
+          echo "开始部署 RAGFlow:"
+          sysctl vm.max_map_count
+          sudo sysctl -w vm.max_map_count=262144
+          git clone https://github.com/infiniflow/ragflow.git
+          cd ragflow/docker
+          sed -i 's/80:80/180:80/' docker-compose.yml
+          docker compose -f docker-compose.yml up -d
+          docker logs -f ragflow-server
+
+          echo "地址：IP:180"
+
       - name: 发送 Telegram 通知
         run: |
           # 获取当前时间（UTC+8 时区，北京时间）
@@ -284,6 +297,7 @@ jobs:
           🌐 <b>Open WebUI:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:8080</code>  
           🪶 <b>Apache Tika 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:9998</code>  
           🤖 <b>MaxKB 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:6060</code>  
+          🌊 <b>RAGFlow 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:180</code>
 
           🕒 <b>当前时间:</b> <code>$current_time</code>  
           EOF
