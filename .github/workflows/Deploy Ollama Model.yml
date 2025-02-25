@@ -17,14 +17,14 @@ jobs:
   DeployLLM:
     runs-on: ubuntu-latest
     steps:
-      # - name: 最大化磁盘空间
-      #   uses: easimon/maximize-build-space@master
-      #   with:
-      #     overprovision-lvm: 'true'
-      #     remove-dotnet: 'true'
-      #     remove-android: 'true'
-      #     remove-haskell: 'true'
-      #     remove-codeql: 'true'
+      - name: 最大化磁盘空间
+        uses: easimon/maximize-build-space@master
+        with:
+          overprovision-lvm: 'true'
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
 
       - name: 迁出代码
         uses: actions/checkout@v3
@@ -144,14 +144,14 @@ jobs:
   DeployWEB:
     runs-on: ubuntu-latest
     steps:
-      # - name: 最大化磁盘空间
-      #   uses: easimon/maximize-build-space@master
-      #   with:
-      #     overprovision-lvm: 'true'
-      #     remove-dotnet: 'true'
-      #     remove-android: 'true'
-      #     remove-haskell: 'true'
-      #     remove-codeql: 'true'
+      - name: 最大化磁盘空间
+        uses: easimon/maximize-build-space@master
+        with:
+          overprovision-lvm: 'true'
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
 
       - name: 迁出代码
         uses: actions/checkout@v3
@@ -299,14 +299,14 @@ jobs:
   DeployRAG:
     runs-on: ubuntu-latest
     steps:
-      # - name: 最大化磁盘空间
-      #   uses: easimon/maximize-build-space@master
-      #   with:
-      #     overprovision-lvm: 'true'
-      #     remove-dotnet: 'true'
-      #     remove-android: 'true'
-      #     remove-haskell: 'true'
-      #     remove-codeql: 'true'
+      - name: 最大化磁盘空间
+        uses: easimon/maximize-build-space@master
+        with:
+          overprovision-lvm: 'true'
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
 
       - name: 迁出代码
         uses: actions/checkout@v3
@@ -376,7 +376,8 @@ jobs:
           cd ragflow/docker
           sed -i 's/-slim//' .env
           docker compose -f docker-compose.yml up -d
-          docker logs -f ragflow-server
+          sleep 30
+          docker logs ragflow-server
 
           echo "地址：IP:80"
 
