@@ -16,8 +16,6 @@ on:
 jobs:
   DeployLLM:
     runs-on: ubuntu-latest
-    outputs:
-      LLM_IP: ${{ steps.get_local_ip.outputs.local_ip }}
     steps:
       - name: 最大化磁盘空间
         uses: easimon/maximize-build-space@master
@@ -145,9 +143,6 @@ jobs:
 
   DeployWEB:
     runs-on: ubuntu-latest
-    
-    if: ${{ always() }}
-    needs: [DeployLLM]
     steps:
       - name: 最大化磁盘空间
         uses: easimon/maximize-build-space@master
@@ -246,26 +241,10 @@ jobs:
           echo "--------------------------硬盘信息--------------------------"
           echo "硬盘数量: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
-      - name: 获取大模型IP
-        id: get_llm_ip
-        run: |
-          echo "开始监控"
-          while true; do
-            echo "正在获取大模型IP"
-            IP=${{needs.DeployLLM.outputs.LLM_IP}}
-            if [ -n "$IP" ]; then
-              echo "大模型IP: $IP"
-              echo "llm_ip=$IP" >> $GITHUB_OUTPUT
-              break
-            fi
-            sleep 1
-          done
-          ping -c 5 $llm_ip
-
       - name: 部署Open WebUI
         run: |
           echo "开始部署Open WebUI:"
-          docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://${{steps.get_llm_ip.outputs.llm_ip}}:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+          docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
           echo "地址：IP:8080"
 
       - name: 发送 Telegram 通知
