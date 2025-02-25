@@ -361,11 +361,11 @@ jobs:
           echo "提取到本地 IP: ${LOCAL_IP}"
           echo "local_ip=${LOCAL_IP}" >> $GITHUB_OUTPUT
 
-      - name: 部署 MaxKB
-        run: |
-          echo "开始部署 MaxKB:"
-          docker run -d --name=maxkb --restart=always -p 6060:8080 -v ~/.maxkb:/var/lib/postgresql/data -v ~/.python-packages:/opt/maxkb/app/sandbox/python-packages registry.fit2cloud.com/maxkb/maxkb
-          echo "地址：IP:6060"
+      # - name: 部署 MaxKB
+      #   run: |
+      #     echo "开始部署 MaxKB:"
+      #     docker run -d --name=maxkb --restart=always -p 6060:8080 -v ~/.maxkb:/var/lib/postgresql/data -v ~/.python-packages:/opt/maxkb/app/sandbox/python-packages registry.fit2cloud.com/maxkb/maxkb
+      #     echo "地址：IP:6060"
 
       - name: 部署 RAGFlow
         run: |
@@ -382,6 +382,7 @@ jobs:
 
       - name: 发送 Telegram 通知
         run: |
+          # 🤖 <b>MaxKB 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:6060</code>  
           # 获取当前时间（UTC+8 时区，北京时间）
           current_time=$(date -u +"%Y-%m-%d %H:%M:%S" -d "8 hour")
 
@@ -399,7 +400,7 @@ jobs:
           📮 <b>邮政编码:</b> <code>${{ steps.check_server.outputs.postal }}</code>  
           ⏰ <b>时区:</b> <code>${{ steps.check_server.outputs.timezone }}</code>  
 
-          🤖 <b>MaxKB 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}:6060</code>  
+          
           🌊 <b>RAGFlow 地址:</b> <code>http://${{ steps.get_local_ip.outputs.local_ip }}</code>
 
           🕒 <b>当前时间:</b> <code>$current_time</code>  
