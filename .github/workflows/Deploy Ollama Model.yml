@@ -10,7 +10,7 @@ on:
       embedding_model:
         description: '嵌入模型名称'
         required: true
-        default: 'nomic-embed-text'
+        default: 'bge-m3'
         
 
 jobs:
